@@ -16,11 +16,29 @@
 // metódus segítségével add hozzá a objektumhoz a kontruktor függvényen belül.  
 
 
-function Walker (name, state) {
+function Walker (name = "John Doe", state = "dead") {
     this.name = name;
-    this.state = state;}
+    this.state = state;
 
-    const makkara = new Walker("John Doe", "dead");
+    Object.defineProperty(this, 'firstName', {
+    get (){ 
+        return this.name.split(' ')[0];
+    },
+    set (value) {
+        this.name = `${value} ${this.name.split(' ')[1]}`;
+    },
+    });
+
+    Object.defineProperty(this, 'lastName', {
+    get () {
+        return this.name.split(' ')[1];
+    },
+    set     (value) {
+        this.name = `${this.name.split(' ')[0]} ${value}`;
+    },
+});
+}
+
     
         Walker.prototype.walk = function(speedInMph = "10") {
         return (`${this.name} the ${this.state} walks with ${speedInMph} mph!`);
@@ -33,23 +51,7 @@ function Walker (name, state) {
     }
 
 
-Object.defineProperty(makkara, 'firstname', {
-    get firstName (){ 
-        return this.name.split(' ')[0];
-    },
-    set firstName (value) {
-        this.name = `${value} ${this.name.split(' ')[1]}`;
-    },
-    });
 
-Object.defineProperty(makkara, 'lastName', {
-    get lastName() {
-        return this.name.split(' ')[1];
-    },
-    set lastName(value) {
-        this.name = `${this.name.split(' ')[0]} ${value} `;
-    },
-});
 
 
 export default Walker;
